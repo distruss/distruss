@@ -296,6 +296,9 @@ impl Perform for GetCaptcha {
     let png = base64::encode(png_byte_array);
 
     let uuid = uuid::Uuid::new_v4().to_string();
+    let problem = lemmy_utils::gatekeeper::EquationSystem2x2::new();
+    let gatekeeper = problem.to_string();
+    let answer = format!("{}::{}", problem.answer_string(), answer);
 
     let wav = captcha_espeak_wav_base64(&answer).ok();
 
@@ -309,7 +312,7 @@ impl Perform for GetCaptcha {
     context.chat_server().do_send(captcha_item);
 
     Ok(GetCaptchaResponse {
-      ok: Some(CaptchaResponse { png, uuid, wav }),
+      ok: Some(CaptchaResponse { png, uuid, wav, gatekeeper }),
     })
   }
 }

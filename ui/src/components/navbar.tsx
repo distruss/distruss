@@ -266,17 +266,6 @@ export class Navbar extends Component<any, NavbarState> {
                     {i18n.t('create_community')}
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link
-                    class="nav-link"
-                    to="/sponsors"
-                    title={i18n.t('donate_to_lemmy')}
-                  >
-                    <svg class="icon">
-                      <use xlinkHref="#icon-coffee"></use>
-                    </svg>
-                  </Link>
-                </li>
               </ul>
               <ul class="navbar-nav my-2">
                 {this.canAdmin && (

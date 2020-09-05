@@ -278,11 +278,55 @@ export class Login extends Component<any, State> {
                 type="text"
                 class="form-control"
                 id="register-captcha"
-                value={this.state.registerForm.captcha_answer}
+                value={this.state.registerForm.captcha_input}
                 onInput={linkEvent(
                   this,
                   this.handleRegisterCaptchaAnswerChange
                 )}
+                required
+              />
+            </div>
+          </div>
+        )}
+        {this.state.captcha && (
+          <div class="form-group row">
+            <label class="col-sm-2">
+              <span class="mr-2">Solve Problem</span>
+            </label>
+            <div class="col-sm-8">
+              {this.state.captcha.ok && (
+                <svg viewBox="0 0 700 300" class="rounded"
+                     style="border: 1px solid #D3D3D3; pointer-events: none; user-select: none;">
+                  <title>Determine x and y in the following equations.</title>
+                  <text font-size="48" x="350" y="100" font-family="serif"
+                        text-anchor="middle" fill="#343a40">
+                    {this.state.captcha.ok.gatekeeper.split("::")[0]}
+                    <tspan y="225" x="350">{this.state.captcha.ok.gatekeeper.split("::")[1]}</tspan>
+                  </text>
+                </svg>
+              )}
+            </div>
+            <div class="col-sm-2">
+              <label class="col-form-label" htmlFor="gatekeeper-x">
+                {i18n.t('x')}
+              </label>
+              <input
+                type="text"
+                id="gatekeeper-x"
+                class="form-control"
+                value={this.state.registerForm.gatekeeper_x}
+                onInput={linkEvent(this, this.handleGatekeeperXChange)}
+                required
+              />
+              <label class="col-form-label" htmlFor="gatekeeper-y">
+                {i18n.t('y')}
+              </label>
+              <input
+                type="text"
+                id="gatekeeper-y"
+                class="form-control"
+                value={this.state.registerForm.gatekeeper_y}
+                onInput={linkEvent(this, this.handleGatekeeperYChange)}
                 required
               />
             </div>
@@ -373,6 +417,10 @@ export class Login extends Component<any, State> {
   handleRegisterSubmit(i: Login, event: any) {
     event.preventDefault();
     i.state.registerLoading = true;
+    i.state.registerForm.captcha_answer = [
+        i.state.registerForm.gatekeeper_x,
+        i.state.registerForm.gatekeeper_y,
+        i.state.registerForm.captcha_input].join("::");
     i.setState(i.state);
     WebSocketService.Instance.register(i.state.registerForm);
   }
@@ -406,7 +454,17 @@ export class Login extends Component<any, State> {
   }
 
   handleRegisterCaptchaAnswerChange(i: Login, event: any) {
-    i.state.registerForm.captcha_answer = event.target.value;
+    i.state.registerForm.captcha_input = event.target.value;
+    i.setState(i.state);
+  }
+
+  handleGatekeeperXChange(i: Login, event: any) {
+    i.state.registerForm.gatekeeper_x = event.target.value;
+    i.setState(i.state);
+  }
+
+  handleGatekeeperYChange(i: Login, event: any) {
+    i.state.registerForm.gatekeeper_y = event.target.value;
     i.setState(i.state);
   }
 
@@ -445,7 +503,9 @@ export class Login extends Component<any, State> {
     if (msg.error) {
       toast(i18n.t(msg.error), 'danger');
       this.state = this.emptyState;
-      this.state.registerForm.captcha_answer = undefined;
+      this.state.registerForm.captcha_input = undefined;
+      this.state.registerForm.gatekeeper_x = undefined;
+      this.state.registerForm.gatekeeper_y = undefined;
       // Refetch another captcha
       WebSocketService.Instance.getCaptcha();
       this.setState(this.state);

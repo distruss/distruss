@@ -189,7 +189,7 @@ export class Main extends Component<any, MainState> {
     if (this.state.siteRes.site.name) {
       return `${this.state.siteRes.site.name}`;
     } else {
-      return 'Lemmy';
+      return 'Distruss';
     }
   }
 
@@ -447,37 +447,10 @@ export class Main extends Component<any, MainState> {
     return (
       <>
         <h5>
-          {i18n.t('powered_by')}
-          <svg class="icon mx-2">
-            <use xlinkHref="#icon-mouse">#</use>
-          </svg>
-          <a href={repoUrl}>
-            Lemmy<sup>beta</sup>
-          </a>
+          Welcome the Distruss preview
         </h5>
         <p class="mb-0">
-          <T i18nKey="landing_0">
-            #
-            <a href="https://en.wikipedia.org/wiki/Social_network_aggregation">
-              #
-            </a>
-            <a href="https://en.wikipedia.org/wiki/Fediverse">#</a>
-            <br class="big"></br>
-            <code>#</code>
-            <br></br>
-            <b>#</b>
-            <br class="big"></br>
-            <a href={repoUrl}>#</a>
-            <br class="big"></br>
-            <a href="https://www.rust-lang.org">#</a>
-            <a href="https://actix.rs/">#</a>
-            <a href="https://infernojs.org">#</a>
-            <a href="https://www.typescriptlang.org/">#</a>
-            <br class="big"></br>
-            <a href="https://github.com/LemmyNet/lemmy/graphs/contributors?type=a">
-              #
-            </a>
-          </T>
+          Nice to see you! We're still building the site, which will eventually relocate to <code>https://distruss.net</code>. Be ready for data loss: communities, posts, and user accounts are temporary until Alpha migration. If you would like to help out, please visit our <a href="https://github.com/distruss/distruss/">Github</a> to report issues or contribute code.
         </p>
       </>
     );

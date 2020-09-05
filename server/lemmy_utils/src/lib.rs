@@ -12,6 +12,7 @@ pub extern crate serde_json;
 pub extern crate url;
 
 pub mod settings;
+pub mod gatekeeper;
 
 use crate::settings::Settings;
 use actix_web::dev::ConnectionInfo;
@@ -84,21 +85,15 @@ pub fn convert_datetime(datetime: NaiveDateTime) -> DateTime<FixedOffset> {
 }
 
 pub fn remove_slurs(test: &str) -> String {
-  SLUR_REGEX.replace_all(test, "*removed*").to_string()
+    // NOTE Modified to do nothing
+    // Might need more nuanced approach later
+    test.to_string()
 }
 
-pub fn slur_check(test: &str) -> Result<(), Vec<&str>> {
-  let mut matches: Vec<&str> = SLUR_REGEX.find_iter(test).map(|mat| mat.as_str()).collect();
-
-  // Unique
-  matches.sort_unstable();
-  matches.dedup();
-
-  if matches.is_empty() {
-    Ok(())
-  } else {
-    Err(matches)
-  }
+pub fn slur_check(_test: &str) -> Result<(), Vec<&str>> {
+    // NOTE Modified to do nothing
+    // Might need more nuanced approach later
+    return Ok(());
 }
 
 pub fn slurs_vec_to_str(slurs: Vec<&str>) -> String {
