@@ -20,6 +20,7 @@ import { Inbox } from './components/inbox';
 import { Search } from './components/search';
 import { Sponsors } from './components/sponsors';
 import { Instances } from './components/instances';
+import { DistrussLegal } from './components/distruss-legal';
 import { Symbols } from './components/symbols';
 import { i18n } from './i18next';
 
@@ -91,6 +92,7 @@ class Index extends Component<any, any> {
                   component={PasswordChange}
                 />
                 <Route path={`/instances`} component={Instances} />
+                <Route path={`/legal`} component={DistrussLegal} />
               </Switch>
               <Symbols />
             </div>
