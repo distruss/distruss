@@ -57,6 +57,11 @@ export class Footer extends Component<any, FooterState> {
               </Link>
             </li>
             <li class="nav-item">
+              <Link class="nav-link" to="/legal">
+                {i18n.t('legal')}
+              </Link>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="https://github.com/distruss/distruss/">
                 {i18n.t('code')}
               </a>
